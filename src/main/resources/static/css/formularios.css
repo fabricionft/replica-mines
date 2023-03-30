@@ -1,0 +1,78 @@
+.tela-esconder{
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(0, 0, 0, 0.35);
+    z-index: -1;
+    opacity: 0;
+}
+
+.tela-esconder.ativo{
+    z-index: 3;
+    opacity: 1;
+}
+
+.formulario-usuario{
+    width: 230px;
+    height: 250px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background: #fff;
+    border-radius: 8px;
+}
+
+.header-formulario-usuario, .margem-formulario-usuario{
+    width: 87.5%;
+    height: 10%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.header-formulario-usuario{flex-direction: row-reverse;}
+
+.margem-formulario-usuario{
+    height: 75%;
+    flex-direction: column;
+    justify-content: space-around;
+}
+
+.input-usuario, .btn-usuario{
+    width: 100%;
+    height: 25%;
+    margin: 0;
+}
+
+.input-usuario{
+    width: calc(100% - 12.5px);
+    background: rgb(240, 244, 255);
+    border: 1px solid rgb(230, 230, 230);;;
+    color: rgb(84, 84, 84);
+    padding-left: 10px;
+    border: none;
+    font-size: 14px;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    font-weight: initial;
+}
+
+.btn-usuario{
+    border-radius: 6px;
+    color: white;
+    font-weight: bold;
+}
+
+
+@media screen and (max-width: 500px){
+    .tela-esconder{
+        flex-direction: column;
+    }
+
+    .formulario-usuario{
+        width: 80%;
+    }
+}

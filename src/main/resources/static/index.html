@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mines</title>
+
+    <link rel="stylesheet" href="css/css.css">
+    <link rel="stylesheet" href="css/layout.css">
+    <link rel="stylesheet" href="css/messageBox.css">
+    <link rel="stylesheet" href="css/formularios.css">
+
+
+    <script
+        src="https://code.jquery.com/jquery-3.6.1.min.js"
+        integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ="
+        crossorigin="anonymous" defer>
+    </script>
+    <script src="js/validacoes.js" defer></script>
+    <script src="js/formularios.js" defer></script>
+    <script src="js/geral.js" defer></script>
+    <script src="js/saldo.js" defer></script>
+    <script src="js/jogo.js" defer></script>
+
+</head>
+<body>
+
+    <!--Tela de sobreposição - formulários-->
+    <div class="tela-esconder" id="containerForms">
+        <!--Form cadastro-->
+        <div class="formulario-usuario" id="formCadastro" name="formulario">
+            <header class="header-formulario-usuario">
+                <label onclick="fecharFormulario()">
+                    <img src="img/x.png" class="icon-3">
+                </label>
+            </header>
+
+            <div class="margem-formulario-usuario">
+                <input class="input-usuario" type="text"
+                       id="usuarioCadastro" name="cadastro" placeholder="Defina seu usuário">
+                <input class="input-usuario" type="password"
+                       id="senhaCadastro" name="cadastro" placeholder="Defina sua senha">
+
+                <button type="button" class="btn-usuario" onclick="fazerCadastro()">Cadastrar</button>
+            </div>
+        </div>
+
+        <!--Form login-->
+        <div class="formulario-usuario" id="formLogin" name="formulario">
+            <header class="header-formulario-usuario">
+                <label onclick="fecharFormulario()">
+                    <img src="img/x.png" class="icon-3">
+                </label>
+            </header>
+
+            <div class="margem-formulario-usuario">
+                <input class="input-usuario" type="text"
+                       id="usuarioLogin" placeholder="Degite seus usuário">
+                <input class="input-usuario" type="password"
+                       id="senhaLogin" placeholder="Digite sua senha">
+
+                <button type="button" class="btn-usuario" onclick="fazerLogin()">Login</button>
+            </div>
+        </div>
+    </div>
+
+    <input type="checkbox" class="abrir-menu" id="barraDeMenu">
+    <div class="container-barra-de-menu">
+        <label for="barraDeMenu">
+            <img src="img/esconder.png" class="icon-fechar">
+        </label>
+    </div>
+
+    <nav class="menubar">
+        <header class="cabecalho-menubar">
+            <p class="texto-cabecalho-menubar" id="logar">Faça <a class="link-cabecalho-menubar" onclick="renderizarFormulario('formLogin')">Login</a> ou<br>
+            se <a onclick="renderizarFormulario('formCadastro')" class="link-cabecalho-menubar">Cadastre</a></p>
+
+            <p class="link-cabecalho-menubar" id="deslogar" onclick="deslogar()">Sair</p>
+        </header>
+        <div class="botoes-menubar">
+            <div class="btn-menubar">
+                <div class="img-btn-menubar">
+                    <img src="img/microtransacao.png" width="30px">
+                </div>
+                <div class="texto-btn-menubar">Depositar</div>
+            </div>
+
+            <div class="btn-menubar">
+                <div class="img-btn-menubar">
+                    <img src="img/nota-de-banco.png" width="30px">
+                </div>
+                <div class="texto-btn-menubar">Saque</div>
+            </div>
+        </div>
+    </nav>
+
+    <header class="cabecalho-mines">
+        <div class="margem-cabecalho">
+            <label for="barraDeMenu">
+                <img src="img/iconMenu.png" class="icon">
+            </label>
+
+            <p class="texto-cabecalho" id="saldo">Saldo: R$ 0.00</p>
+        </div>
+    </header>
+
+    <main class="conteudo">
+        <div class="tela-botoes-superior">
+            <select class="select-mines" id="quantidadeDeMinas" onchange="localStorage.setItem('quantidadeBombas', value)"></select>
+        </div>
+
+        <div class="container-mines">
+            <div class="tela-mines" id="mines">
+            </div>
+
+            <div class="tela-valores">
+                <div class="alinha-valores">
+                    <p class="texto-valores">Valor inicial: <span id="valorInicial">?</span></p>
+                    <p class="texto-valores">Valor atual: <span id="valorAtual">?</span></p>
+                    <p class="texto-valores">Proxímo valor: <span id="proximoValor">?</span></p>
+                </div>
+            </div>
+        </div>
+
+        <div class="tela-botoes-inferior">
+            <button id="iniciarjogo" name="btnJogo" class="btn-jogar" onclick="jogar($('#valor').val())">jogar</button>
+            <button id="darCashOut" name="btnJogo" class="btn-cashout" onclick="darCashOut()">Cash out</button>
+            <button id="jogarNovamente" name="btnJogo" class="btn-jogar-novamente" onclick="location.reload()">Jogar novamente</button>
+
+            <div class="linha-input-valor">
+                <button class="btn-mudar-quantidade" onclick="alterarValorDeAposta('+')">+</button>
+                <button class="btn-mudar-quantidade" onclick="alterarValorDeAposta('-')">-</button>
+                <input class="input-valor" type="number"
+                       id="valor" placeholder="0.00">
+            </div>
+        </div>
+    </main>
+
+    <!--Message Box-->
+    <div class="esconderMessageBox" id="esconder">
+        <div class="message-box" id="mensagem">
+            <div class="texto-message-box" id="textoMensagem"></div>
+            <footer class="footer-message-box" id="btnMensagem">
+                <button class="btn-message-box" id="btnMessage" onclick="fecharMessageBox()">Ok</button>
+            </footer>
+        </div>
+    </div>
+
+</body>
+</html>

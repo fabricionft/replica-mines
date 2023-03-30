@@ -1,0 +1,105 @@
+.abrir-menu[type="checkbox"]:checked~.container-barra-de-menu{
+    transform: translateX(100%);
+}
+
+.abrir-menu[type="checkbox"]:checked~.menubar{
+    transform: translateX(100%);
+    transition: 0.75s linear;
+}
+
+.abrir-menu[type="checkbox"]:checked~.icon-fechar{
+    width: 100px;
+}
+
+.abrir-menu{display: none;}
+
+.container-barra-de-menu{
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    z-index: 1;
+    left: -100%;
+    background: rgba(0, 0, 0, 0.35);
+}
+
+.menubar{
+    position: fixed;
+    height: 100%;
+    width: 20%;
+    left: -20%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background: #f5f7f9;
+    z-index: 2;
+}
+
+.cabecalho-menubar, .botoes-menubar{
+    width: 85%;
+    height: 10%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.botoes-menubar{
+    width: 100%;
+    height: 85%;
+    justify-content: left;
+    cursor: pointer;
+}
+
+.texto-cabecalho-menubar{
+    text-align: center;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    color: rgb(69, 69, 69);
+}
+
+.link-cabecalho-menubar{
+    font-weight: bold;
+    color: rgb(0, 102, 254);
+    cursor: pointer;
+}
+
+.btn-menubar{
+    width: 100%;
+    height: 50px;
+    display: flex;
+    justify-content: center;}
+
+.img-btn-menubar, .texto-btn-menubar{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 20%;
+}
+
+.texto-btn-menubar{
+    width: 70%;
+    justify-content: left;
+}
+
+
+.icon, .icon-fechar, .icon-3{
+    width: 30px;
+    cursor: pointer;
+}
+.icon-fechar{
+    position: absolute;
+    left: 22%;
+}
+
+.icon-3{width: 17.5px;}
+
+@media screen and (max-width: 600px){
+    .menubar{
+        left: -70%;
+        width: 70%;
+    }
+
+    .icon-fechar{left: 75%;}
+}

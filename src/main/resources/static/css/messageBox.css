@@ -1,0 +1,53 @@
+.esconderMessageBox{
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.35);
+    position: fixed;
+    z-index: -1;
+    opacity: 0;
+    display: flex;
+    justify-content: center;
+    margin: 0;
+}
+
+.esconderMessageBox.ativo{
+    opacity: 1;
+    z-index: 5;
+}
+
+.message-box{
+    position: absolute;
+    width: 200px;
+    border-radius: 6px;
+    display: flex;
+    flex-direction: column;
+    top: -200px;
+    align-items: center;
+    transition: 1.25s;
+}
+
+.texto-message-box{
+    width: 80%;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    font-size: 15px;
+    color: rgb(84, 84, 84);
+    margin: 15px 0;
+}
+
+.footer-message-box{
+    width: 85%;
+    height: auto;
+    display: flex;
+    justify-content: left;
+}
+
+.btn-message-box{
+    width: 100%;
+    height: 40px;
+    color: white;
+    margin-bottom: 15px;
+}
+
+@media screen and (max-width: 500px) {
+    .message-box{width: 220px;}
+}

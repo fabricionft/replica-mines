@@ -16,5 +16,5 @@ public class UsuarioModel {
 
     private String usuario;
     private String senha;
-    private Double saldo;
+    private Double saldo = 100.0;
 }
