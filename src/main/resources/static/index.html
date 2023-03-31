@@ -17,6 +17,7 @@
         integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ="
         crossorigin="anonymous" defer>
     </script>
+    <script src="js/apostas.js" defer></script>
     <script src="js/validacoes.js" defer></script>
     <script src="js/formularios.js" defer></script>
     <script src="js/geral.js" defer></script>
@@ -38,9 +39,9 @@
 
             <div class="margem-formulario-usuario">
                 <input class="input-usuario" type="text"
-                       id="usuarioCadastro" name="cadastro" placeholder="Defina seu usuário">
+                       id="usuarioCadastro" name="inputForm" placeholder="Defina seu usuário">
                 <input class="input-usuario" type="password"
-                       id="senhaCadastro" name="cadastro" placeholder="Defina sua senha">
+                       id="senhaCadastro" name="inputForm" placeholder="Defina sua senha">
 
                 <button type="button" class="btn-usuario" onclick="fazerCadastro()">Cadastrar</button>
             </div>
@@ -56,15 +57,51 @@
 
             <div class="margem-formulario-usuario">
                 <input class="input-usuario" type="text"
-                       id="usuarioLogin" placeholder="Degite seus usuário">
+                       id="usuarioLogin" name="inputForm" placeholder="Degite seus usuário">
                 <input class="input-usuario" type="password"
-                       id="senhaLogin" placeholder="Digite sua senha">
+                       id="senhaLogin" name="inputForm" placeholder="Digite sua senha">
 
                 <button type="button" class="btn-usuario" onclick="fazerLogin()">Login</button>
             </div>
         </div>
+
+        <!--Form Deposito-->
+        <div class="formulario-usuario" id="formDeposito" name="formulario">
+            <header class="header-formulario-usuario">
+                <label onclick="fecharFormulario()">
+                    <img src="img/x.png" class="icon-3">
+                </label>
+            </header>
+
+            <div class="margem-formulario-usuario">
+                <input class="input-usuario" type="number"
+                       id="valorDeposito" name="inputForm" placeholder="Degite o valor desejado">
+
+                <button type="button" class="btn-usuario" onclick="efetuarTransacao($('#valorDeposito').val(), 'deposito')">Depositar</button>
+            </div>
+        </div>
+
+        <!--Form Saque-->
+        <div class="formulario-usuario" id="formSaque" name="formulario">
+            <header class="header-formulario-usuario">
+                <label onclick="fecharFormulario()">
+                    <img src="img/x.png" class="icon-3">
+                </label>
+            </header>
+
+            <div class="margem-formulario-usuario">
+                <input class="input-usuario" type="number"
+                       id="valorSaque" name="inputForm" placeholder="Degite o valor desejado">
+                <input class="input-usuario" type="text"
+                       id="chavePix" name="inputForm" placeholder="Degite a chave PIX">
+
+                <button type="button" class="btn-usuario" onclick="efetuarTransacao($('#valorSaque').val(), 'saque')">Sacar</button>
+            </div>
+        </div>
     </div>
 
+
+    <!--Tela de sobreposição - barra de menu-->
     <input type="checkbox" class="abrir-menu" id="barraDeMenu">
     <div class="container-barra-de-menu">
         <label for="barraDeMenu">
@@ -72,30 +109,39 @@
         </label>
     </div>
 
+    <!--barra de menu-->
     <nav class="menubar">
         <header class="cabecalho-menubar">
-            <p class="texto-cabecalho-menubar" id="logar">Faça <a class="link-cabecalho-menubar" onclick="renderizarFormulario('formLogin')">Login</a> ou<br>
+            <p class="texto-cabecalho-menubar" name="logado">Faça <a class="link-cabecalho-menubar" onclick="renderizarFormulario('formLogin')">Login</a> ou<br>
             se <a onclick="renderizarFormulario('formCadastro')" class="link-cabecalho-menubar">Cadastre</a></p>
 
-            <p class="link-cabecalho-menubar" id="deslogar" onclick="deslogar()">Sair</p>
+            <p class="link-cabecalho-menubar" name="logado" onclick="deslogar()">Sair</p>
         </header>
         <div class="botoes-menubar">
-            <div class="btn-menubar">
+            <div class="btn-menubar" onclick="renderizarFormulario('formDeposito')">
                 <div class="img-btn-menubar">
                     <img src="img/microtransacao.png" width="30px">
                 </div>
                 <div class="texto-btn-menubar">Depositar</div>
             </div>
 
-            <div class="btn-menubar">
+            <div class="btn-menubar" onclick="renderizarFormulario('formSaque')">
                 <div class="img-btn-menubar">
-                    <img src="img/nota-de-banco.png" width="30px">
+                    <img src="img/ouro.png" width="30px">
                 </div>
                 <div class="texto-btn-menubar">Saque</div>
+            </div>
+
+            <div class="btn-menubar" onclick="redirecionar()">
+                <div class="img-btn-menubar">
+                    <img src="img/contrato.png" width="30px">
+                </div>
+                <div class="texto-btn-menubar">Histórico</div>
             </div>
         </div>
     </nav>
 
+    <!--Cabeçalho-->
     <header class="cabecalho-mines">
         <div class="margem-cabecalho">
             <label for="barraDeMenu">
@@ -106,28 +152,32 @@
         </div>
     </header>
 
+    <!--Jogo-->
     <main class="conteudo">
+        <!--Seletor Minas-->
         <div class="tela-botoes-superior">
             <select class="select-mines" id="quantidadeDeMinas" onchange="localStorage.setItem('quantidadeBombas', value)"></select>
         </div>
 
+        <!--Minas e valores-->
         <div class="container-mines">
             <div class="tela-mines" id="mines">
             </div>
 
             <div class="tela-valores">
                 <div class="alinha-valores">
-                    <p class="texto-valores">Valor inicial: <span id="valorInicial">?</span></p>
-                    <p class="texto-valores">Valor atual: <span id="valorAtual">?</span></p>
-                    <p class="texto-valores">Proxímo valor: <span id="proximoValor">?</span></p>
+                    <p class="texto-valores">Valor inicial <span class="texto-valor" name="valor" id="valorInicial">-</span></p>
+                    <p class="texto-valores">Valor atual <span class="texto-valor" name="valor" id="valorAtual">-</span></p>
+                    <p class="texto-valores">Proxímo valor <span class="texto-valor"name="valor" id="proximoValor">-</span></p>
                 </div>
             </div>
         </div>
 
+        <!--Botôes-->
         <div class="tela-botoes-inferior">
             <button id="iniciarjogo" name="btnJogo" class="btn-jogar" onclick="jogar($('#valor').val())">jogar</button>
             <button id="darCashOut" name="btnJogo" class="btn-cashout" onclick="darCashOut()">Cash out</button>
-            <button id="jogarNovamente" name="btnJogo" class="btn-jogar-novamente" onclick="location.reload()">Jogar novamente</button>
+            <button id="jogarNovamente" name="btnJogo" class="btn-jogar-novamente" onclick="gerarMinas()">Jogar novamente</button>
 
             <div class="linha-input-valor">
                 <button class="btn-mudar-quantidade" onclick="alterarValorDeAposta('+')">+</button>

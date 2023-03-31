@@ -8,10 +8,7 @@ import java.util.List;
 
 @Getter
 @Setter
-public class UsuarioResponseDTO {
-
-    private Long codigo;
-    private String usuario;
-    private Double saldo;
+public class ApostaResponseDTO {
     private List<ApostasModel> apostas;
 }
+

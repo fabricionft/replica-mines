@@ -26,24 +26,38 @@ function renderizarValores(valorInicial, valoratual, proximovalor){
     $('#proximoValor').html("R$ "+parseFloat(proximovalor).toFixed(2));
 }
 
-function diminuirSaldo(valor){
+function concluirAposta(acao, valorInicial, valorFinal){
+    let valor = (acao == "cashout") ? (valorFinal - valorInicial) : valorInicial;
+    let a = pegarQuantidadeDebombas();
     $.ajax({
         method: "PUT",
-        url: "/usuario/descontar/"+localStorage.getItem('codigo')+"/"+valor,
+        url: "/usuario",
+        data: JSON.stringify({
+            codigo: localStorage.getItem('codigo'),
+            acao: acao,
+            quantidadeDeBombas: a,
+            valor: valorInicial,
+            retorno: valor
+        }),
+        contentType: "application/json; charset-utf8",
         success: function (dados){
             $('#saldo').html('Saldo: R$ '+dados.saldo.toFixed(2));
+            $("[name='valor']").html("-");
         }
     }).fail(function(xhr, status, errorThrown){
         gerarMessageBox(2, xhr.responseText, "Tentar novamente");
     });
 }
 
-function aumentarSaldo(valorInicial, valorFinal){
+function efetuarTransacao(valor, acao){
+    let valorFinal = (acao == "deposito") ? valor : (valor * -1);
+
     $.ajax({
         method: "PUT",
-        url: "/usuario/cashout/"+localStorage.getItem('codigo')+"/"+valorInicial+"/"+valorFinal,
+        url: "/usuario/"+localStorage.getItem('codigo')+"/"+valorFinal,
         success: function (dados){
-            $('#saldo').html('Saldo: R$ '+dados.saldo.toFixed(2));
+            $('#saldo').html('Saldo: R$ '+dados.toFixed(2));
+            gerarMessageBox(1, "Transação realizada com sucesso!", "Prosseguir");
         }
     }).fail(function(xhr, status, errorThrown){
         gerarMessageBox(2, xhr.responseText, "Tentar novamente");

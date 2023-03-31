@@ -10,9 +10,9 @@ import java.util.Optional;
 @Repository
 public interface UsuarioRepository extends JpaRepository<UsuarioModel, Long> {
 
-    @Query(value = "select * from mines where usuario = ?", nativeQuery = true)
+    @Query(value = "select * from usuarios where usuario = ?", nativeQuery = true)
     Optional<UsuarioModel> buscarPorEmail(String email);
 
-    @Query(value = "select * from mines where codigo = ?", nativeQuery = true)
+    @Query(value = "select * from usuarios where codigo = ?", nativeQuery = true)
     Optional<UsuarioModel> buscarPorCodigo(Long codigo);
 }

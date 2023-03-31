@@ -1,7 +1,6 @@
 window.onload = () => {
     gerarMinas();
-    pararOuVoltar(1);
-    verificarSessao();
+    alterarSessao();
     atualizarsaldo();
     atualizarSeletorDeMinas();
 }
@@ -13,20 +12,21 @@ function atualizarSeletorDeMinas(){
 }
 
 function pararOuVoltar(acao){
-    if(acao == 1) $("[name='mine']").attr('disabled', 'disabled');
-    if(acao == 2) $("[name='mine']").removeAttr("disabled");
+    (acao == 1) ? $("[name='mine']").attr('disabled', 'disabled') : $("[name='mine']").removeAttr("disabled");
 }
 
 function gerarMinas(){
+   $("[name='mine']").remove();
    for(var i = 1; i <= 25; i++){
        $('#mines').append(
-          '<button class="mine" id="'+i+'" name="mine" onclick="(verificar(this.id)) ? errou(this.id) : acertou(this.id);">'+
-             '<img id="img-'+i+'" src="img/circulo.png" width="40%">'+
+          '<button class="mine" id="'+i+'" name="mine" onclick="(verificar(this.id)) ? errou(this.id) : acertou(this.id);" disabled>'+
+             '<img id="img-'+i+'" src="img/circulo.png" width="45%">'+
           '</button>'
        );
 
        if(i <= 20) $('#quantidadeDeMinas').append('<option value="'+i+'">Minas: '+i+'</option>');
    }
+   exibirBotao("iniciarjogo");
 }
 
 function verificar(id){
@@ -48,13 +48,13 @@ function errou(id){
     $('#'+id).css('background', "rgb(241, 172, 172)");
     $('#img-'+id).attr('src', "img/explosao.png");
 
-    diminuirSaldo($('#valorInicial').html().split(" ")[1]);
+    concluirAposta("descontar", $('#valorInicial').html().split(" ")[1], 0)
 }
 
 function darCashOut(){
     exibirItens();
 
-    aumentarSaldo($('#valorInicial').html().split(" ")[1], $('#valorAtual').html().split(" ")[1])
+    concluirAposta("cashout", $('#valorInicial').html().split(" ")[1], $('#valorAtual').html().split(" ")[1])
 }
 
 function exibirItens(){

@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+ <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mines</title>
+
+    <link rel="stylesheet" href="css/css.css">
+    <link rel="stylesheet" href="css/messageBox.css">
+    <link rel="stylesheet" href="css/apostas.css">
+
+    <script
+        src="https://code.jquery.com/jquery-3.6.1.min.js"
+        integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ="
+        crossorigin="anonymous" defer>
+    </script>
+    <script src="js/saldo.js" defer></script>
+    <script src="js/geral.js" defer></script>
+    <script src="js/apostas.js" defer></script>
+
+ </head>
+ <body>
+    <!--Cabeçalho-->
+    <header class="cabecalho-mines">
+        <div class="margem-cabecalho">
+            <a href="index.html">
+                <img src="img/direito-removebg-preview.png" width="30px">
+            </a>
+
+            <p class="texto-cabecalho" id="saldo">Saldo: R$ 0.00</p>
+        </div>
+    </header>
+
+    <!--Histórico-->
+    <div class="margem-btn-excluir-historico">
+        <button type="button" class="btn-excluir-historico" id="btnExcluirHistorico" onclick="apagarHistorico()">Apagar histórico</button>
+    </div>
+
+    <div class="conteudo-apostas" id="containerApostas">
+        <h1 class="estado-historico" id="estadoHistorico">Histórico vázio</h1>
+    </div>
+
+    <!--Message Box-->
+    <div class="esconderMessageBox" id="esconder">
+        <div class="message-box" id="mensagem">
+            <div class="texto-message-box" id="textoMensagem"></div>
+            <footer class="footer-message-box" id="btnMensagem">
+                <button class="btn-message-box" id="btnMessage" onclick="fecharMessageBox()">Ok</button>
+            </footer>
+        </div>
+    </div>
+ </body>
+</html>

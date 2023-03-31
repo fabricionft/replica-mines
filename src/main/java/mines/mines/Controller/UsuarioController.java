@@ -1,5 +1,6 @@
 package mines.mines.Controller;
 
+import mines.mines.DTO.Request.ApostaResquestDTO;
 import mines.mines.DTO.Response.UsuarioResponseDTO;
 import mines.mines.Model.UsuarioModel;
 import mines.mines.Service.UsuarioService;
@@ -61,17 +62,15 @@ public class UsuarioController {
         return  new ResponseEntity<>(converterEmDto(usuarioService.fazerLogin(email, senha)), HttpStatus.CREATED);
     }
 
-    @PutMapping(path = "descontar/{codigo}/{valor}")
-    public ResponseEntity<?> descontarSaldoDoUSuario(@PathVariable Long codigo,
-                                                     @PathVariable Double valor){
-        return new ResponseEntity<>(converterEmDto(usuarioService.descontarSaldo(codigo, valor)), HttpStatus.OK);
+    @PutMapping
+    public ResponseEntity<?> concluirAposta(@RequestBody ApostaResquestDTO aposta){
+        return new ResponseEntity<>(converterEmDto(usuarioService.concluirAposta(aposta)), HttpStatus.OK);
     }
 
-    @PutMapping(path = "cashout/{codigo}/{valorInicial}/{valorFinal}")
-    public ResponseEntity<?> fazerCashOut(@PathVariable Long codigo,
-                                          @PathVariable Double valorInicial,
-                                          @PathVariable Double valorFinal){
-        return new ResponseEntity<>(converterEmDto(usuarioService.fazerCashOut(codigo, valorInicial, valorFinal)), HttpStatus.OK);
+    @PutMapping(path = "/{codigo}/{valor}")
+    public ResponseEntity<?> efetuarTransacao(@PathVariable Long codigo,
+                                              @PathVariable Double valor){
+        return new ResponseEntity<>(usuarioService.efetuarTransacao(codigo, valor), HttpStatus.OK);
     }
 
     @DeleteMapping

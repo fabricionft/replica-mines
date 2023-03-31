@@ -17,7 +17,6 @@
 
 .formulario-usuario{
     width: 230px;
-    height: 250px;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -28,24 +27,23 @@
 
 .header-formulario-usuario, .margem-formulario-usuario{
     width: 87.5%;
-    height: 10%;
     display: flex;
     align-items: center;
     justify-content: space-between;
 }
 
-.header-formulario-usuario{flex-direction: row-reverse;}
+.header-formulario-usuario{margin-top: 20px; flex-direction: row-reverse;}
 
 .margem-formulario-usuario{
-    height: 75%;
     flex-direction: column;
     justify-content: space-around;
+    margin-bottom: 20px;
 }
 
 .input-usuario, .btn-usuario{
     width: 100%;
-    height: 25%;
-    margin: 0;
+    height: 50px;
+    margin-top: 17.5px;
 }
 
 .input-usuario{

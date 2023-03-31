@@ -1,24 +1,15 @@
+function alterarSessao(){
+    (!verificarSessao()) ? $("[name='logado']").hide().first().show() : $("[name='logado']").hide().last().show();
+}
+
 function verificarSessao(){
-    if(localStorage.getItem('sessao') == "logado"){
-        $('#deslogar').show();
-        $('#logar').hide();
-        return true;
-    }
-    else{
-        $('#deslogar').hide();
-        $('#logar').show();
-        return false;
-    }
+    let resposta = (localStorage.getItem('sessao') == "logado") ? true : false;
+    return resposta;
 }
 
-function travarTela() {
-    document.documentElement.style.overflow = 'hidden';
-    document.body.scroll = "no";
-}
-
-function destravarTela() {
-    document.documentElement.style.overflow = 'auto';
-    document.body.scroll = "yes";
+function redirecionar(){
+    if(verificarSessao()) location.href = "historico.html";
+    else gerarMessageBox(2, "Você precisa estar logado para ver seu histórico!", "Tentar novamente")
 }
 
 function gerarMessageBox(cor, mensagem, textoBtn, acesso){
@@ -30,12 +21,9 @@ function gerarMessageBox(cor, mensagem, textoBtn, acesso){
 
     $('#textoMensagem').html(mensagem);
     $('#btnMessage').html(textoBtn);
-
-    travarTela();
 }
 
 function fecharMessageBox(){
-    destravarTela();
     $('#esconder').removeClass('ativo')
     $('#mensagem'). css("transform", "translateY(-250px)");
 

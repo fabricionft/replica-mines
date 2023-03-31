@@ -1,15 +1,23 @@
 $(document).ready(function (){
-    $('#formCadastro').hide();
-    $('#formLogin').hide();
+    $("[name='formulario']").hide();
 });
 
 function renderizarFormulario(formulario){
-    $('#containerForms').addClass('ativo');
-    $('#'+formulario).show();
+    if(formulario != "formDeposito" && formulario != "formSaque"){
+        $('#containerForms').addClass('ativo');
+        $('#'+formulario).show();
+    }
+    else{
+        if(verificarSessao()){
+            $('#containerForms').addClass('ativo');
+            $('#'+formulario).show();
+        }else gerarMessageBox(2, "Você precisa estar logado para fazer um deposito ou saque");
+    }
 }
 
 function fecharFormulario(){
     $('#containerForms').removeClass('ativo');
+    $("[name='inputForm']").val("");
     $("[name='formulario']").hide();
 }
 

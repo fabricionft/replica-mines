@@ -4,9 +4,11 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.List;
+
 @Getter
 @Setter
-@Table(name = "mines")
+@Table(name = "usuarios")
 @Entity
 public class UsuarioModel {
 
@@ -17,4 +19,11 @@ public class UsuarioModel {
     private String usuario;
     private String senha;
     private Double saldo = 100.0;
+
+    @ElementCollection
+    private List<ApostasModel> apostas = null;
+
+    public void addApostas(ApostasModel aposta) {
+        this.apostas.add(aposta);
+    }
 }

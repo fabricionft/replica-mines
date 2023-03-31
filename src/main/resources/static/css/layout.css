@@ -39,7 +39,7 @@
 
 .cabecalho-menubar, .botoes-menubar{
     width: 85%;
-    height: 10%;
+    height: 7.5%;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -48,7 +48,7 @@
 
 .botoes-menubar{
     width: 100%;
-    height: 85%;
+    height: 87.5%;
     justify-content: left;
     cursor: pointer;
 }
@@ -60,8 +60,9 @@
 }
 
 .link-cabecalho-menubar{
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
     font-weight: bold;
-    color: rgb(0, 102, 254);
+    color: rgb(0, 91, 227);
     cursor: pointer;
 }
 
@@ -69,20 +70,27 @@
     width: 100%;
     height: 50px;
     display: flex;
-    justify-content: center;}
+    justify-content: center;
+}
+
+.btn-menubar:hover{
+    background: #dde4ff;
+    width: 92.5%;
+}
+
 
 .img-btn-menubar, .texto-btn-menubar{
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 20%;
 }
 
 .texto-btn-menubar{
     width: 70%;
+    margin-left: 10px;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
     justify-content: left;
 }
-
 
 .icon, .icon-fechar, .icon-3{
     width: 30px;
@@ -93,7 +101,10 @@
     left: 22%;
 }
 
-.icon-3{width: 17.5px;}
+.icon-3{
+    width: 17.5px;
+}
+
 
 @media screen and (max-width: 600px){
     .menubar{
@@ -101,5 +112,7 @@
         width: 70%;
     }
 
-    .icon-fechar{left: 75%;}
+    .icon-fechar{
+        left: 75%;
+    }
 }
