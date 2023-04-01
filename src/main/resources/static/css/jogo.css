@@ -52,7 +52,7 @@ body{
 
 .container-mines{
     height: 500px;
-    width: 650px;
+    width: 675px;
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -79,7 +79,7 @@ body{
 
 .alinha-valores{
     height: 135px;
-    margin: 20px 15px;
+    margin: 20px 30px;
     display: flex;
     flex-direction: column;
     justify-content: space-between;

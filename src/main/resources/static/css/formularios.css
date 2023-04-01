@@ -16,7 +16,7 @@
 }
 
 .formulario-usuario{
-    width: 230px;
+    width: 275px;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -42,8 +42,8 @@
 
 .input-usuario, .btn-usuario{
     width: 100%;
-    height: 50px;
-    margin-top: 17.5px;
+    height: 45px;
+    margin-top: 15px;
 }
 
 .input-usuario{width: calc(100% - 12.5px);}
