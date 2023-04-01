@@ -12,12 +12,15 @@ function listarApostas(){
     $.ajax({
         method: "GET",
         url: "/aposta/"+localStorage.getItem('codigo'),
-        success: function (dados){
-            verificarEstadoDoHistorico(dados.apostas.length);
-            dados.apostas.slice().reverse().forEach(aposta => gerarAposta(aposta));
+        beforeSend: function (xhr) {
+            xhr.setRequestHeader("Authorization", 'Bearer '+ localStorage.getItem('token'));
         }
-    }).fail(function(xhr, status, errorThrown){
-        gerarMessageBox(2, xhr.responseText, "Tentar novamente");
+    }).done(function (dados) {
+        verificarEstadoDoHistorico(dados.apostas.length);
+        dados.apostas.slice().reverse().forEach(aposta => gerarAposta(aposta));
+    }).fail(function (err)  {
+        if(err.status == 403) gerarMessageBox(2, "Sem autoização: Seu token expirou ou não existe!!", "Ok");
+        else gerarMessageBox(2, err.responseJSON.mensagem, "Ok");
     });
 }
 
@@ -57,10 +60,13 @@ function apagarHistorico(){
     $.ajax({
         method: "DELETE",
         url: "/aposta/"+localStorage.getItem('codigo'),
-        success: function (dados){
-            gerarMessageBox(1, dados, "Prosseguir")
+        beforeSend: function (xhr) {
+            xhr.setRequestHeader("Authorization", 'Bearer '+ localStorage.getItem('token'));
         }
-    }).fail(function(xhr, status, errorThrown){
-        gerarMessageBox(2, xhr.responseText, "Tentar novamente");
+    }).done(function (dados) {
+        gerarMessageBox(1, dados, "Prosseguir")
+    }).fail(function (err)  {
+        if(err.status == 403) gerarMessageBox(2, "Sem autoização: Seu token expirou ou não existe!! Para conseguir um novo deslogue e faça login novamente!", "Ok");
+        else gerarMessageBox(2, err.responseJSON.mensagem, "Ok");
     });
 }

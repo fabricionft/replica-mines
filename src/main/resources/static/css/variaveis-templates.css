@@ -1,0 +1,56 @@
+:root{
+    /*Tons de branco*/
+    --branco: #fff;
+    --branco-azulado: #dde4ff;
+
+    /*Tons de Azul*/;
+    --fundo: #007bff;
+    --azul: rgb(11, 78, 179);
+    --azul-escuro: rgb(1, 56, 138);
+    --azul-claro: rgb(0, 91, 227);
+
+    /*Tons de verde*/
+    --verde: rgb(0, 222, 96);
+    --verde-escuro: rgb(0, 189, 82);
+
+    /*Tons de preto*/
+    --preto: #000;
+    --preto-claro: #222;
+    --preto-sobreposicao: rgba(0, 0, 0, 0.35);
+    --cinza: rgb(84, 84, 84);
+}
+
+p, a{
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    font-size: 15px;
+    text-decoration: none;
+    margin: 0;
+    color: var(--cinza);
+    color: var(--branco);
+}
+
+input{
+    background: rgb(240, 244, 255);
+    border: 1px solid rgb(230, 230, 230);
+    color: var(--cinza);
+    padding-left: 10px;
+    border: none;
+    font-size: 14px;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    border-radius: 5px;
+}
+
+button, select{
+    border: none;
+    background: var(--verde);
+    font-weight: bold;
+    box-shadow: 0 2px 4px rgb(0 0 0 / 20%), 0 8px 16px rgb(0 0 0 / 20%);
+    cursor: pointer;
+    color: #fff;
+    border-radius: 6px;
+    font-family: calibri;
+    font-size: 17.5px;
+    font-weight: bold;
+}
+
+button:hover{background: var(--verde-escuro);}

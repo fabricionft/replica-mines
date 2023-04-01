@@ -1,7 +1,7 @@
 .esconderMessageBox{
     width: 100%;
     height: 100%;
-    background: rgba(0, 0, 0, 0.35);
+    background: var(--preto-sobreposicao);
     position: fixed;
     z-index: -1;
     opacity: 0;
@@ -28,9 +28,7 @@
 
 .texto-message-box{
     width: 80%;
-    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
-    font-size: 15px;
-    color: rgb(84, 84, 84);
+    color: var(--cinza);
     margin: 15px 0;
 }
 
@@ -44,7 +42,6 @@
 .btn-message-box{
     width: 100%;
     height: 40px;
-    color: white;
     margin-bottom: 15px;
 }
 

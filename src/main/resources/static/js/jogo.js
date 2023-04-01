@@ -27,6 +27,7 @@ function gerarMinas(){
        if(i <= 20) $('#quantidadeDeMinas').append('<option value="'+i+'">Minas: '+i+'</option>');
    }
    exibirBotao("iniciarjogo");
+   $("#darCashOut").attr('disabled', 'disabled');
 }
 
 function verificar(id){
@@ -38,6 +39,7 @@ function verificar(id){
 function acertou(id){
     $('#'+id).css('background', "orange").attr('disabled', 'disabled');
     $('#img-'+id).attr('src', "img/estrela.png");
+    $("#darCashOut").removeAttr("disabled");
 
     calcularValores($('#valorAtual').html().split(" ")[1]);
 }
@@ -48,13 +50,13 @@ function errou(id){
     $('#'+id).css('background', "rgb(241, 172, 172)");
     $('#img-'+id).attr('src', "img/explosao.png");
 
-    concluirAposta("descontar", $('#valorInicial').html().split(" ")[1], 0)
+    concluirAposta("descontar", $('#valorInicial').html().split(" ")[1], 0);
 }
 
 function darCashOut(){
     exibirItens();
 
-    concluirAposta("cashout", $('#valorInicial').html().split(" ")[1], $('#valorAtual').html().split(" ")[1])
+    concluirAposta("cashout", $('#valorInicial').html().split(" ")[1], $('#valorAtual').html().split(" ")[1]);
 }
 
 function exibirItens(){
@@ -77,12 +79,15 @@ function jogar(valor){
         if(valor.length){
             $.ajax({
                 method: "GET",
-                url: "/usuario/iniciar/"+localStorage.getItem('codigo')+"/"+valor,
-                success: function (dados){
-                    iniciarJogo(valor);
+                url: "/aposta/"+localStorage.getItem('codigo')+"/"+valor,
+                beforeSend: function (xhr) {
+                    xhr.setRequestHeader("Authorization", 'Bearer '+ localStorage.getItem('token'));
                 }
-            }).fail(function(xhr, status, errorThrown){
-                gerarMessageBox(2, xhr.responseText, "Tentar novamente");
+            }).done(function (dados) {
+                iniciarJogo(valor);
+            }).fail(function(err){
+                if(err.status == 403) gerarMessageBox(2, "Sem autoização: Seu token expirou ou não existe!! Para conseguir um novo deslogue e faça login novamente!", "Ok");
+                else gerarMessageBox(2, err.responseJSON.mensagem, "Ok");
             });
         }else gerarMessageBox(2, "É necessário que você digite algum valor!!", "Ok");
     }

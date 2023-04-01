@@ -9,7 +9,7 @@ function verificarSessao(){
 
 function redirecionar(){
     if(verificarSessao()) location.href = "historico.html";
-    else gerarMessageBox(2, "Você precisa estar logado para ver seu histórico!", "Tentar novamente")
+    else gerarMessageBox(2, "Você precisa estar logado para ver seu histórico!", "Tentar novamente");
 }
 
 function gerarMessageBox(cor, mensagem, textoBtn, acesso){
@@ -24,7 +24,7 @@ function gerarMessageBox(cor, mensagem, textoBtn, acesso){
 }
 
 function fecharMessageBox(){
-    $('#esconder').removeClass('ativo')
+    $('#esconder').removeClass('ativo');
     $('#mensagem'). css("transform", "translateY(-250px)");
 
     if($('#btnMessage').html() == "Prosseguir") location.reload();

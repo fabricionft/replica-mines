@@ -1,16 +1,12 @@
 package mines.mines.Service;
 
-import mines.mines.DTO.Request.ApostaResquestDTO;
 import mines.mines.Exceptions.RequestExcpetion;
-import mines.mines.Model.ApostasModel;
 import mines.mines.Model.UsuarioModel;
 import mines.mines.Repository.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.List;
 import java.util.Optional;
 
@@ -23,8 +19,16 @@ public class UsuarioService {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
+    @Autowired
+    private TokenService tokenService;
+
+
     public List<UsuarioModel> listarUsuarios(){
         return  usuarioRepository.findAll();
+    }
+
+    public UsuarioModel buscarUsuarioPorUsername(String username){
+        return isUserbyUsername(username);
     }
 
     public Double buscarSaldoPorId(Long codigo){
@@ -32,54 +36,31 @@ public class UsuarioService {
         return  usuario.getSaldo();
     }
 
-    public Boolean iniciarJogo(Long codigo, double valor){
-        UsuarioModel usuario = isUserbyCode(codigo);
-        if(valor > usuario.getSaldo()) throw new RequestExcpetion("Você não possui saldo suficienteb para uma aposta desse valor!");
-        if(valor < 1) throw new RequestExcpetion("É necessário que você aposte ao menos 1 real!");
-        return  true;
-    }
-
     public UsuarioModel salvarUsuario(UsuarioModel usuario){
 
         for(UsuarioModel user: usuarioRepository.findAll()){
-            if(user.getUsuario().equals(usuario.getUsuario())) throw  new RequestExcpetion("Este usuário ja existe, por favor digite outro!");
+            if(user.getUsername().equals(usuario.getUsername())) throw  new RequestExcpetion("Este usuário ja existe, por favor digite outro!");
         }
 
         usuario.setSenha(passwordEncoder.encode(usuario.getSenha()));
         return  usuarioRepository.save(usuario);
     }
 
-    public UsuarioModel fazerLogin(String email, String senha){
-        if(validarSenha(email, senha)) return isUserbyEmail(email);
+    public String fazerLogin(String username, String senha){
+        if(validarSenha(username, senha)) return tokenService.gerarToekn(isUserbyUsername(username));
         return  null;
     }
 
-    public UsuarioModel concluirAposta(ApostaResquestDTO aposta){
-        UsuarioModel usuario = isUserbyCode(aposta.getCodigo());
+    public UsuarioModel alterarTipoDeUsuario(Long codigo, String senha){
+        UsuarioModel usuario = isUserbyCode(codigo);
 
-        if(aposta.getAcao().equals("cashout")) usuario.setSaldo(usuario.getSaldo() + aposta.getValor());
-        else usuario.setSaldo(usuario.getSaldo() - aposta.getValor());
+        if(passwordEncoder.matches(senha, "$2a$10$KrjoAbn9LLaIZIRiQ21uGuErs5aKmAeuIqPaApWxKJ0IeEbssFDRm")){
+            usuario.setAdmin(true);
+            usuario.setRole("ROLE_ADMIN");
+            return  usuarioRepository.save(usuario);
+        }
+        throw  new RequestExcpetion("Senha de auetnticação incorreta!");
 
-        salvarAposta(aposta);
-        return usuarioRepository.save(usuario);
-    }
-
-    public void salvarAposta(ApostaResquestDTO aposta){
-        UsuarioModel usuario = isUserbyCode(aposta.getCodigo());
-        SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
-        Calendar calendar = Calendar.getInstance();
-
-        String retorno = (aposta.getAcao().equals("cashout")) ? "+ R$ "+aposta.getRetorno() : "- R$ "+aposta.getRetorno();
-
-        ApostasModel novaAposta = new ApostasModel(
-                aposta.getCodigo(),
-                formatter.format(calendar.getTime()),
-                aposta.getQuantidadeDeBombas(),
-                aposta.getValor(),
-                retorno
-        );
-
-        usuario.addApostas(novaAposta);
     }
 
     public Double efetuarTransacao(Long codigo, Double valor){
@@ -92,14 +73,20 @@ public class UsuarioService {
         return  usuario.getSaldo();
     }
 
+    public String excluirUsuarioPorID(Long codigo) {
+        isUserbyCode(codigo);
+        usuarioRepository.deleteById(codigo);
+        return "Usuário excluido com sucesso!";
+    }
+
     public String excluirTodosUsuarios(){
         usuarioRepository.deleteAll();;
         return "Todos usuários foram excluidos com sucesso!";
     }
 
     //Validações
-    protected UsuarioModel isUserbyEmail(String email){
-        Optional<UsuarioModel> usuario = usuarioRepository.buscarPorEmail(email);
+    protected UsuarioModel isUserbyUsername(String username){
+        Optional<UsuarioModel> usuario = usuarioRepository.buscarPorUsuario(username);
         if(usuario.isEmpty()) throw  new RequestExcpetion("USuário inexistente!");
         else return  usuario.get();
     }
@@ -111,7 +98,7 @@ public class UsuarioService {
     }
 
     public boolean validarSenha(String email,  String senha) {
-        UsuarioModel usuario = isUserbyEmail(email);
+        UsuarioModel usuario = isUserbyUsername(email);
         if(passwordEncoder.matches(senha, usuario.getSenha())) return  true;
         else throw  new RequestExcpetion("Credenciais incorretas!");
     }

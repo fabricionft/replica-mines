@@ -21,7 +21,7 @@
     align-items: center;
     z-index: 1;
     left: -100%;
-    background: rgba(0, 0, 0, 0.35);
+    background: var(--preto-sobreposicao);
 }
 
 .menubar{
@@ -33,7 +33,7 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    background: #f5f7f9;
+    background: var(--branco);
     z-index: 2;
 }
 
@@ -54,15 +54,12 @@
 }
 
 .texto-cabecalho-menubar{
-    text-align: center;
-    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
-    color: rgb(69, 69, 69);
+    color: var(--cinza);
 }
 
 .link-cabecalho-menubar{
-    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
     font-weight: bold;
-    color: rgb(0, 91, 227);
+    color: var(--azul-claro);
     cursor: pointer;
 }
 
@@ -74,7 +71,7 @@
 }
 
 .btn-menubar:hover{
-    background: #dde4ff;
+    background: var(--branco-azulado);
     width: 92.5%;
 }
 
@@ -88,7 +85,6 @@
 .texto-btn-menubar{
     width: 70%;
     margin-left: 10px;
-    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
     justify-content: left;
 }
 

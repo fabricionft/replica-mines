@@ -3,11 +3,14 @@ function atualizarsaldo(){
         $.ajax({
             method: "GET",
             url: "/usuario/saldo/"+localStorage.getItem('codigo'),
-            success: function (dados){
-                $('#saldo').html('Saldo: R$ '+dados.toFixed(2));
+            beforeSend: function (xhr) {
+                xhr.setRequestHeader("Authorization", 'Bearer '+ localStorage.getItem('token'));
             }
-        }).fail(function(xhr, status, errorThrown){
-            gerarMessageBox(2, xhr.responseText, "Tentar novamente");
+        }).done(function (dados) {
+            $('#saldo').html('Saldo: R$ '+dados.toFixed(2));
+        }).fail(function(err)  {
+            if(err.status == 403) gerarMessageBox(2, "Sem autoização: Seu token expirou ou não existe!! Para conseguir um novo deslogue e faça login novamente!", "Ok");
+            else gerarMessageBox(2, err.responseJSON.mensagem, "Ok");
         });
     }
 }
@@ -22,30 +25,34 @@ function calcularValores(valor){
 
 function renderizarValores(valorInicial, valoratual, proximovalor){
     $('#valorInicial').html("R$ "+parseFloat(valorInicial).toFixed(2));
-    $('#valorAtual').html("R$ "+parseFloat(valoratual).toFixed(2))
+    $('#valorAtual').html("R$ "+parseFloat(valoratual).toFixed(2));
     $('#proximoValor').html("R$ "+parseFloat(proximovalor).toFixed(2));
 }
 
 function concluirAposta(acao, valorInicial, valorFinal){
     let valor = (acao == "cashout") ? (valorFinal - valorInicial) : valorInicial;
-    let a = pegarQuantidadeDebombas();
+    let numeroDeBombas = pegarQuantidadeDebombas();
+
     $.ajax({
         method: "PUT",
-        url: "/usuario",
+        url: "/aposta",
         data: JSON.stringify({
             codigo: localStorage.getItem('codigo'),
             acao: acao,
-            quantidadeDeBombas: a,
+            quantidadeDeBombas: numeroDeBombas,
             valor: valorInicial,
             retorno: valor
         }),
         contentType: "application/json; charset-utf8",
-        success: function (dados){
-            $('#saldo').html('Saldo: R$ '+dados.saldo.toFixed(2));
-            $("[name='valor']").html("-");
+        beforeSend: function (xhr) {
+            xhr.setRequestHeader("Authorization", 'Bearer '+ localStorage.getItem('token'));
         }
-    }).fail(function(xhr, status, errorThrown){
-        gerarMessageBox(2, xhr.responseText, "Tentar novamente");
+    }).done(function (dados) {
+        $('#saldo').html('Saldo: R$ '+dados.saldo.toFixed(2));
+        $("[name='valor']").html("-");
+    }).fail(function (err)  {
+        if(err.status == 403) gerarMessageBox(2, "Sem autoização: Seu token expirou ou não existe!! Para conseguir um novo deslogue e faça login novamente!", "Ok");
+        else gerarMessageBox(2, err.responseJSON.mensagem, "Ok");
     });
 }
 
@@ -55,11 +62,14 @@ function efetuarTransacao(valor, acao){
     $.ajax({
         method: "PUT",
         url: "/usuario/"+localStorage.getItem('codigo')+"/"+valorFinal,
-        success: function (dados){
-            $('#saldo').html('Saldo: R$ '+dados.toFixed(2));
-            gerarMessageBox(1, "Transação realizada com sucesso!", "Prosseguir");
+        beforeSend: function (xhr) {
+            xhr.setRequestHeader("Authorization", 'Bearer '+ localStorage.getItem('token'));
         }
-    }).fail(function(xhr, status, errorThrown){
-        gerarMessageBox(2, xhr.responseText, "Tentar novamente");
+    }).done(function (dados) {
+        $('#saldo').html('Saldo: R$ '+dados.toFixed(2));
+        gerarMessageBox(1, "Transação realizada com sucesso!", "Prosseguir");
+    }).fail(function (err)  {
+        if(err.status == 403) gerarMessageBox(2, "Sem autoização: Seu token expirou ou não existe!! Para conseguir um novo deslogue e faça login novamente!", "Ok");
+        else gerarMessageBox(2, err.responseJSON.mensagem, "Ok");
     });
 }

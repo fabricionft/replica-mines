@@ -5,7 +5,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    background: rgba(0, 0, 0, 0.35);
+    background: var(--preto-sobreposicao);
     z-index: -1;
     opacity: 0;
 }
@@ -21,7 +21,7 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    background: #fff;
+    background: var(--branco);
     border-radius: 8px;
 }
 
@@ -46,23 +46,7 @@
     margin-top: 17.5px;
 }
 
-.input-usuario{
-    width: calc(100% - 12.5px);
-    background: rgb(240, 244, 255);
-    border: 1px solid rgb(230, 230, 230);;;
-    color: rgb(84, 84, 84);
-    padding-left: 10px;
-    border: none;
-    font-size: 14px;
-    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
-    font-weight: initial;
-}
-
-.btn-usuario{
-    border-radius: 6px;
-    color: white;
-    font-weight: bold;
-}
+.input-usuario{width: calc(100% - 12.5px);}
 
 
 @media screen and (max-width: 500px){
