@@ -19,7 +19,7 @@ function gerarMinas(){
    $("[name='mine']").remove();
    for(var i = 1; i <= 25; i++){
        $('#mines').append(
-          '<button class="mine" id="'+i+'" name="mine" onclick="(verificar(this.id)) ? errou(this.id) : acertou(this.id);" disabled>'+
+          '<button class="mine" id="'+i+'" name="mine" onclick="(verificar(parseInt(this.id))) ? errou(this.id) : acertou(this.id);" disabled>'+
              '<img id="img-'+i+'" src="img/circulo.png" width="45%">'+
           '</button>'
        );
@@ -31,9 +31,8 @@ function gerarMinas(){
 }
 
 function verificar(id){
-    for(var i = 0; i < localBombas.length; i++)
-        if(id == localBombas[i]) return true;
-    return false
+    let resposta = (localBombas.includes(id)) ? true : false;
+    return resposta;
 }
 
 function acertou(id){
@@ -60,15 +59,8 @@ function darCashOut(){
 }
 
 function exibirItens(){
-    localBombas.forEach(idBomba => {
-        for(var i = 1; i <= 25; i++)
-            if(idBomba == i)
-                $('#img-'+i).attr('src', "img/bombear.png").addClass('bomb');
-    });
-
     for(var i = 1; i <= 25; i++)
-        if($('#img-'+i).attr('class') != "bomb")
-            $('#img-'+i).attr('src', "img/estrela.png");
+        (localBombas.includes(i)) ? $('#img-'+i).attr('src', "img/bombear.png") : $('#img-'+i).attr('src', "img/estrela.png");
 
     $("[name='mine']").attr('disabled', 'disabled');
     exibirBotao("jogarNovamente");

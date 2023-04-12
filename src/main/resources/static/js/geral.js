@@ -12,7 +12,7 @@ function redirecionar(){
     else gerarMessageBox(2, "Você precisa estar logado para ver seu histórico!", "Tentar novamente");
 }
 
-function tratarErros(){
+function tratarErros(err){
     if(err.status == 403) gerarMessageBox(2, "Sem autoização: Seu token expirou ou não existe!! Para conseguir um novo deslogue e faça login novamente!", "Ok");
     else gerarMessageBox(2, err.responseJSON.mensagem, "Ok");
 }
