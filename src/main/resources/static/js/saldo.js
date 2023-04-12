@@ -9,8 +9,7 @@ function atualizarsaldo(){
         }).done(function (dados) {
             $('#saldo').html('Saldo: R$ '+dados.toFixed(2));
         }).fail(function(err)  {
-            if(err.status == 403) gerarMessageBox(2, "Sem autoização: Seu token expirou ou não existe!! Para conseguir um novo deslogue e faça login novamente!", "Ok");
-            else gerarMessageBox(2, err.responseJSON.mensagem, "Ok");
+            tratarErros(err);
         });
     }
 }
@@ -51,8 +50,7 @@ function concluirAposta(acao, valorInicial, valorFinal){
         $('#saldo').html('Saldo: R$ '+dados.saldo.toFixed(2));
         $("[name='valor']").html("-");
     }).fail(function (err)  {
-        if(err.status == 403) gerarMessageBox(2, "Sem autoização: Seu token expirou ou não existe!! Para conseguir um novo deslogue e faça login novamente!", "Ok");
-        else gerarMessageBox(2, err.responseJSON.mensagem, "Ok");
+        tratarErros(err);
     });
 }
 
@@ -69,7 +67,6 @@ function efetuarTransacao(valor, acao){
         $('#saldo').html('Saldo: R$ '+dados.toFixed(2));
         gerarMessageBox(1, "Transação realizada com sucesso!", "Prosseguir");
     }).fail(function (err)  {
-        if(err.status == 403) gerarMessageBox(2, "Sem autoização: Seu token expirou ou não existe!! Para conseguir um novo deslogue e faça login novamente!", "Ok");
-        else gerarMessageBox(2, err.responseJSON.mensagem, "Ok");
+        tratarErros(err);
     });
 }

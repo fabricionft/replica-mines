@@ -19,8 +19,7 @@ function listarApostas(){
         verificarEstadoDoHistorico(dados.apostas.length);
         dados.apostas.slice().reverse().forEach(aposta => gerarAposta(aposta));
     }).fail(function (err)  {
-        if(err.status == 403) gerarMessageBox(2, "Sem autoização: Seu token expirou ou não existe!!", "Ok");
-        else gerarMessageBox(2, err.responseJSON.mensagem, "Ok");
+        tratarErros(err);
     });
 }
 
@@ -46,7 +45,7 @@ function gerarAposta(dados){
 
                 '<span class="linha-aposta">'+
                     '<p class="subtitulo-aposta">Retorno liquido</p>'+
-                    '<p class="texto-aposta" id="retorno-'+indexHistorico+'">'+dados.retorno.split(" ")[0]+" "+dados.retorno.split(" ")[1]+" "+parseFloat(dados.retorno.split(" ")[2]).toFixed(2)+'</p>'+
+                    '<p class="texto-aposta" id="retorno-'+indexHistorico+'">'+dados.retorno.split(" ")[0]+" R$ "+parseFloat(dados.retorno.split(" ")[1]).toFixed(2)+'</p>'+
                 '</span>'+
             '</div>'+
         '</div>'
@@ -66,7 +65,6 @@ function apagarHistorico(){
     }).done(function (dados) {
         gerarMessageBox(1, dados, "Prosseguir")
     }).fail(function (err)  {
-        if(err.status == 403) gerarMessageBox(2, "Sem autoização: Seu token expirou ou não existe!! Para conseguir um novo deslogue e faça login novamente!", "Ok");
-        else gerarMessageBox(2, err.responseJSON.mensagem, "Ok");
+        tratarErros(err);
     });
 }

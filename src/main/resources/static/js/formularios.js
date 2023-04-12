@@ -38,8 +38,8 @@ function fazerCadastro(){
             success: function (dados){
                 gerarMessageBox(1, "Cadastro concluído com sucesso!!", "Prosseguir", true);
             }
-        }).fail(function(xhr, status, errorThrown){
-            gerarMessageBox(2, xhr.responseText, "Tentar novamente");
+        }).fail(function(err){
+            gerarMessageBox(2, err.responseJSON.mensagem, "Tentar novamente");
         });
     }
 }
@@ -53,34 +53,19 @@ function fazerLogin(){
         $.ajax({
             method: "POST",
             url: "/usuario/login/"+usuario+"/"+senha,
-            success: function (token){
-                    localStorage.setItem('token', token);
-                    buscarDadosUsuario(usuario);
-                }
-        }).fail(function(xhr, status, errorThrown){
-            gerarMessageBox(2, xhr.responseText, "Tentar novamente");
+            success: function (dados){
+                preencherDados(dados);
+                gerarMessageBox(1, "Logado com sucesso", "Prosseguir");
+            }
+        }).fail(function(err){
+            gerarMessageBox(2, err.responseJSON.mensagem, "Tentar novamente");
         });
     }
 }
 
-function buscarDadosUsuario(username){
-    $.ajax({
-        method: "GET",
-        url: "/usuario/"+username,
-        beforeSend: function (xhr) {
-            xhr.setRequestHeader("Authorization", 'Bearer '+ localStorage.getItem('token'));
-        }
-    }).done(function (dados) {
-        preencherDados(dados);
-        gerarMessageBox(1, "Logado com sucesso", "Prosseguir");
-    }).fail(function (err)  {
-        if(err.status == 403) gerarMessageBox(2, "Sem autoização: Seu token expirou ou não existe!! Para conseguir um novo deslogue e faça login novamente!", "Ok");
-        else gerarMessageBox(2, err.responseJSON.mensagem, "Ok");
-    });
-}
-
 function preencherDados(dados){
     localStorage.setItem('sessao', "logado");
+    localStorage.setItem('token', dados.token);
     localStorage.setItem('codigo', dados.codigo);
 }
 

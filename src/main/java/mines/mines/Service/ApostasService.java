@@ -44,14 +44,14 @@ public class ApostasService {
         SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
         Calendar calendar = Calendar.getInstance();
 
-        String retorno = (aposta.getAcao().equals("cashout")) ? "+ R$ "+aposta.getRetorno() : "- R$ "+aposta.getRetorno();
+        String retorno = (aposta.getAcao().equals("cashout")) ? "+ "+aposta.getRetorno() : "- "+aposta.getRetorno();
 
         ApostasModel novaAposta = new ApostasModel(
-                aposta.getCodigo(),
-                formatter.format(calendar.getTime()),
-                aposta.getQuantidadeDeBombas(),
-                aposta.getValor(),
-                retorno
+            aposta.getCodigo(),
+            formatter.format(calendar.getTime()),
+            aposta.getQuantidadeDeBombas(),
+            aposta.getValor(),
+            retorno
         );
 
         usuario.addApostas(novaAposta);

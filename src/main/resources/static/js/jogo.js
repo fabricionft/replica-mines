@@ -32,7 +32,7 @@ function gerarMinas(){
 
 function verificar(id){
     for(var i = 0; i < localBombas.length; i++)
-        if(parseInt(id) == localBombas[i]) return true;
+        if(id == localBombas[i]) return true;
     return false
 }
 
@@ -86,15 +86,13 @@ function jogar(valor){
             }).done(function (dados) {
                 iniciarJogo(valor);
             }).fail(function(err){
-                if(err.status == 403) gerarMessageBox(2, "Sem autoização: Seu token expirou ou não existe!! Para conseguir um novo deslogue e faça login novamente!", "Ok");
-                else gerarMessageBox(2, err.responseJSON.mensagem, "Ok");
+                tratarErros(err);
             });
         }else gerarMessageBox(2, "É necessário que você digite algum valor!!", "Ok");
     }
     else gerarMessageBox(2, "Você precisa estar logado para fazer uma aposta!", "Ok");
 }
 
-let localBombas;
 function iniciarJogo(valor){
     localBombas = bombasSelecionadas();
     pararOuVoltar(2);
@@ -103,23 +101,11 @@ function iniciarJogo(valor){
 }
 
 function bombasSelecionadas(){
-    let lista = [];
-    for (i = 0; i < 25; i++) {
-        lista[i] = i + 1;
+    let bombasSelecionadas = []
+    while(bombasSelecionadas.length < pegarQuantidadeDebombas()){
+        let numeroRandomico = Math.floor(Math.random() * 25 + 1);
+        if(!bombasSelecionadas.includes(numeroRandomico)) bombasSelecionadas.push(numeroRandomico)
     }
-
-    let tamanhoLista = lista.length;
-    for (tamanhoLista; tamanhoLista;) {
-        numeroAleatorio = Math.random() * tamanhoLista-- | 0;
-        tmp = lista[numeroAleatorio];
-        lista[numeroAleatorio] = lista[tamanhoLista];
-        lista[tamanhoLista] = tmp;
-    }
-
-    let bombasSelecionadas = [];
-    let quantidadeBombas = pegarQuantidadeDebombas();
-    for(i = 0; i < quantidadeBombas; i++) bombasSelecionadas.push(lista[i]);
-
     return bombasSelecionadas;
 }
 

@@ -1,9 +1,11 @@
 package mines.mines.Service;
 
+import mines.mines.DTO.Response.LoginResponseDTO;
 import mines.mines.Exceptions.RequestExcpetion;
 import mines.mines.Model.UsuarioModel;
 import mines.mines.Repository.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -22,6 +24,9 @@ public class UsuarioService {
     @Autowired
     private TokenService tokenService;
 
+    @Value("${senha.sistema}")
+    private String senhaSistema;
+
 
     public List<UsuarioModel> listarUsuarios(){
         return  usuarioRepository.findAll();
@@ -37,30 +42,29 @@ public class UsuarioService {
     }
 
     public UsuarioModel salvarUsuario(UsuarioModel usuario){
-
-        for(UsuarioModel user: usuarioRepository.findAll()){
-            if(user.getUsername().equals(usuario.getUsername())) throw  new RequestExcpetion("Este usuário ja existe, por favor digite outro!");
-        }
+        if(usuarioRepository.buscarPorUsuario(usuario.getUsuario()).isPresent())
+            throw  new RequestExcpetion("Este usuário ja existe, por favor digite outro!");
 
         usuario.setSenha(passwordEncoder.encode(usuario.getSenha()));
         return  usuarioRepository.save(usuario);
     }
 
-    public String fazerLogin(String username, String senha){
-        if(validarSenha(username, senha)) return tokenService.gerarToekn(isUserbyUsername(username));
+    public LoginResponseDTO fazerLogin(String username, String senha){
+        if(validarSenha(username, senha)){
+            UsuarioModel usuario = isUserbyUsername(username);
+            return new LoginResponseDTO(usuario.getCodigo(), tokenService.gerarToekn(usuario));
+        }
         return  null;
     }
 
     public UsuarioModel alterarTipoDeUsuario(Long codigo, String senha){
         UsuarioModel usuario = isUserbyCode(codigo);
-
-        if(passwordEncoder.matches(senha, "$2a$10$KrjoAbn9LLaIZIRiQ21uGuErs5aKmAeuIqPaApWxKJ0IeEbssFDRm")){
+        if(passwordEncoder.matches(senha, senhaSistema)){
             usuario.setAdmin(true);
             usuario.setRole("ROLE_ADMIN");
             return  usuarioRepository.save(usuario);
         }
-        throw  new RequestExcpetion("Senha de auetnticação incorreta!");
-
+        throw  new RequestExcpetion("Senha do sistema incorreta!");
     }
 
     public Double efetuarTransacao(Long codigo, Double valor){

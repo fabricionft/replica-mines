@@ -42,8 +42,8 @@ public class UsuarioController {
 
     @GetMapping
     @PreAuthorize("hasRole('ADMIN')")
-    public List<UsuarioResponseDTO> listarUsuarios(){
-        return  converterListaEmDTO(usuarioService.listarUsuarios());
+    public ResponseEntity<List<?>> listarUsuarios(){
+        return  new ResponseEntity<>(converterListaEmDTO(usuarioService.listarUsuarios()), HttpStatus.OK);
     }
 
     @GetMapping(path = "/{username}")
