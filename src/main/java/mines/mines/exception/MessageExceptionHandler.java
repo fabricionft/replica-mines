@@ -1,4 +1,4 @@
-package mines.mines.exceptions;
+package mines.mines.exception;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

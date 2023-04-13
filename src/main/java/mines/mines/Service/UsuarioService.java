@@ -1,7 +1,7 @@
 package mines.mines.service;
 
 import mines.mines.dto.response.LoginResponseDTO;
-import mines.mines.exceptions.RequestExcpetion;
+import mines.mines.exception.RequestExcpetion;
 import mines.mines.model.UsuarioModel;
 import mines.mines.repository.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;

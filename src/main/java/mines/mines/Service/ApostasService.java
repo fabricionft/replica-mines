@@ -1,7 +1,7 @@
 package mines.mines.service;
 
 import mines.mines.dto.request.ApostaResquestDTO;
-import mines.mines.exceptions.RequestExcpetion;
+import mines.mines.exception.RequestExcpetion;
 import mines.mines.model.ApostasModel;
 import mines.mines.model.UsuarioModel;
 import mines.mines.repository.UsuarioRepository;
