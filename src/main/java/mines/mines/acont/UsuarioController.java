@@ -1,9 +1,9 @@
-package mines.mines.controller;
+package mines.mines.acont;
 
-import mines.mines.dto.request.UsuarioRequestDTO;
-import mines.mines.dto.response.UsuarioResponseDTO;
-import mines.mines.model.UsuarioModel;
-import mines.mines.service.UsuarioService;
+import mines.mines.adt.request.UsuarioRequestDTO;
+import mines.mines.adt.response.UsuarioResponseDTO;
+import mines.mines.amo.UsuarioModel;
+import mines.mines.ase.UsuarioService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

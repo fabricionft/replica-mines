@@ -1,6 +1,6 @@
-package mines.mines.repository;
+package mines.mines.arep;
 
-import mines.mines.model.UsuarioModel;
+import mines.mines.amo.UsuarioModel;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;

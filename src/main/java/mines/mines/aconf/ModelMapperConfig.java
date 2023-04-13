@@ -1,4 +1,4 @@
-package mines.mines.config;
+package mines.mines.aconf;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.context.annotation.Bean;

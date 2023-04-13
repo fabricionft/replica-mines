@@ -1,4 +1,4 @@
-package mines.mines.model;
+package mines.mines.amo;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;

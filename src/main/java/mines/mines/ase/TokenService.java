@@ -1,8 +1,8 @@
-package mines.mines.service;
+package mines.mines.ase;
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
-import mines.mines.model.UsuarioModel;
+import mines.mines.amo.UsuarioModel;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
