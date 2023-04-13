@@ -1,10 +1,10 @@
-package mines.mines.acont;
+package mines.mines.controller;
 
-import mines.mines.adt.request.ApostaResquestDTO;
-import mines.mines.adt.response.ApostaResponseDTO;
-import mines.mines.adt.response.UsuarioResponseDTO;
-import mines.mines.amo.UsuarioModel;
-import mines.mines.ase.ApostasService;
+import mines.mines.dto.request.ApostaResquestDTO;
+import mines.mines.dto.response.ApostaResponseDTO;
+import mines.mines.dto.response.UsuarioResponseDTO;
+import mines.mines.model.UsuarioModel;
+import mines.mines.service.ApostasService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

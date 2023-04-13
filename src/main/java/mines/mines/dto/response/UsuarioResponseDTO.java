@@ -1,4 +1,4 @@
-package mines.mines.adt.response;
+package mines.mines.dto.response;
 
 import lombok.Getter;
 import lombok.Setter;

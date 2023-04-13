@@ -1,4 +1,4 @@
-package mines.mines.aexc;
+package mines.mines.exception;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

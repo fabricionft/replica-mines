@@ -1,8 +1,8 @@
-package mines.mines.asec;
+package mines.mines.security;
 
 import com.auth0.jwt.exceptions.TokenExpiredException;
-import mines.mines.arep.UsuarioRepository;
-import mines.mines.ase.TokenService;
+import mines.mines.repository.UsuarioRepository;
+import mines.mines.service.TokenService;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;

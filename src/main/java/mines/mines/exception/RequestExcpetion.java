@@ -1,4 +1,4 @@
-package mines.mines.aexc;
+package mines.mines.exception;
 
 public class RequestExcpetion extends  RuntimeException{
 

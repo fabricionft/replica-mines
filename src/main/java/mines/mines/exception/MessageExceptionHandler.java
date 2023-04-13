@@ -1,4 +1,4 @@
-package mines.mines.aexc;
+package mines.mines.exception;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -12,7 +12,6 @@ import java.util.Date;
 @Getter
 @Setter
 public class MessageExceptionHandler {
-
     private Date data;
     private Integer status;
     private String erro;

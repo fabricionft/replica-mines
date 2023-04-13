@@ -1,6 +1,6 @@
-package mines.mines.aconf;
+package mines.mines.config;
 
-import mines.mines.asec.FilterToken;
+import mines.mines.security.FilterToken;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
