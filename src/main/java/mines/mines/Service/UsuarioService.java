@@ -1,9 +1,9 @@
-package mines.mines.Service;
+package mines.mines.service;
 
-import mines.mines.DTO.Response.LoginResponseDTO;
-import mines.mines.Exceptions.RequestExcpetion;
-import mines.mines.Model.UsuarioModel;
-import mines.mines.Repository.UsuarioRepository;
+import mines.mines.dto.response.LoginResponseDTO;
+import mines.mines.exceptions.RequestExcpetion;
+import mines.mines.model.UsuarioModel;
+import mines.mines.repository.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -44,7 +44,6 @@ public class UsuarioService {
     public UsuarioModel salvarUsuario(UsuarioModel usuario){
         if(usuarioRepository.buscarPorUsuario(usuario.getUsuario()).isPresent())
             throw  new RequestExcpetion("Este usuário ja existe, por favor digite outro!");
-
         usuario.setSenha(passwordEncoder.encode(usuario.getSenha()));
         return  usuarioRepository.save(usuario);
     }
@@ -54,7 +53,7 @@ public class UsuarioService {
             UsuarioModel usuario = isUserbyUsername(username);
             return new LoginResponseDTO(usuario.getCodigo(), tokenService.gerarToekn(usuario));
         }
-        return  null;
+        else throw  new RequestExcpetion("Credenciais incorretas!");
     }
 
     public UsuarioModel alterarTipoDeUsuario(Long codigo, String senha){
@@ -89,6 +88,10 @@ public class UsuarioService {
     }
 
     //Validações
+    public boolean validarSenha(String email,  String senha) {
+        return passwordEncoder.matches(senha, isUserbyUsername(email).getSenha());
+    }
+
     protected UsuarioModel isUserbyUsername(String username){
         Optional<UsuarioModel> usuario = usuarioRepository.buscarPorUsuario(username);
         if(usuario.isEmpty()) throw  new RequestExcpetion("USuário inexistente!");
@@ -99,11 +102,5 @@ public class UsuarioService {
         Optional<UsuarioModel> usuario = usuarioRepository.buscarPorCodigo(codigo);
         if(usuario.isEmpty()) throw  new RequestExcpetion("USuário inexistente!");
         else return  usuario.get();
-    }
-
-    public boolean validarSenha(String email,  String senha) {
-        UsuarioModel usuario = isUserbyUsername(email);
-        if(passwordEncoder.matches(senha, usuario.getSenha())) return  true;
-        else throw  new RequestExcpetion("Credenciais incorretas!");
     }
 }

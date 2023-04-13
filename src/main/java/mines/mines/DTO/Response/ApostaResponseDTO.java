@@ -1,8 +1,8 @@
-package mines.mines.DTO.Response;
+package mines.mines.dto.response;
 
 import lombok.Getter;
 import lombok.Setter;
-import mines.mines.Model.ApostasModel;
+import mines.mines.model.ApostasModel;
 
 import java.util.List;
 

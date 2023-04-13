@@ -18,21 +18,19 @@ function renderizarFormulario(formulario){
 function fecharFormulario(){
     $('#containerForms').removeClass('ativo');
     $("[name='inputForm']").val("");
+    $("[name='inputLogin']").val("");
     $("[name='formulario']").hide();
 }
 
 function fazerCadastro(){
-    let usuario = $('#usuarioCadastro').val().trim();
-    let senha = $('#senhaCadastro').val().trim();
-
     if(validarCadastro()){
         $.ajax({
             method: "POST",
             url: "/usuario",
             data: JSON.stringify(
             {
-                usuario: usuario,
-                senha: senha
+                usuario: $('#usuarioCadastro').val().trim(),
+                senha: $('#senhaCadastro').val().trim()
             }),
             contentType: "application/json; charset-utf8",
             success: function (dados){
@@ -44,23 +42,21 @@ function fazerCadastro(){
     }
 }
 
-function fazerLogin(){
-    let usuario = $('#usuarioLogin').val().trim();
-    let senha = $('#senhaLogin').val().trim();
+$("[name='inputLogin']").keyup(function(){
+    ($('#usuarioLogin').val().length && $('#senhaLogin').val().length) ? $('#btnLogin').removeAttr("disabled") : $('#btnLogin').attr('disabled', "disabled");
+});
 
-    if(!usuario.length || !senha.length) gerarMessageBox(2, "Preencha os campos corretamente", "Tentar novamente");
-    else{
-        $.ajax({
-            method: "POST",
-            url: "/usuario/login/"+usuario+"/"+senha,
-            success: function (dados){
-                preencherDados(dados);
-                gerarMessageBox(1, "Logado com sucesso", "Prosseguir");
-            }
-        }).fail(function(err){
-            gerarMessageBox(2, err.responseJSON.mensagem, "Tentar novamente");
-        });
-    }
+function fazerLogin(){
+    $.ajax({
+        method: "POST",
+        url: "/usuario/login/"+$('#usuarioLogin').val().trim()+"/"+$('#senhaLogin').val().trim(),
+        success: function (dados){
+            preencherDados(dados);
+            gerarMessageBox(1, "Logado com sucesso", "Prosseguir");
+        }
+    }).fail(function(err){
+        gerarMessageBox(2, err.responseJSON.mensagem, "Tentar novamente");
+    });
 }
 
 function preencherDados(dados){

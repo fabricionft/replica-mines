@@ -1,10 +1,10 @@
-package mines.mines.Service;
+package mines.mines.service;
 
-import mines.mines.DTO.Request.ApostaResquestDTO;
-import mines.mines.Exceptions.RequestExcpetion;
-import mines.mines.Model.ApostasModel;
-import mines.mines.Model.UsuarioModel;
-import mines.mines.Repository.UsuarioRepository;
+import mines.mines.dto.request.ApostaResquestDTO;
+import mines.mines.exceptions.RequestExcpetion;
+import mines.mines.model.ApostasModel;
+import mines.mines.model.UsuarioModel;
+import mines.mines.repository.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

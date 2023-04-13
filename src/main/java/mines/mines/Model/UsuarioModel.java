@@ -1,4 +1,4 @@
-package mines.mines.Model;
+package mines.mines.model;
 
 import jakarta.persistence.*;
 import lombok.Getter;

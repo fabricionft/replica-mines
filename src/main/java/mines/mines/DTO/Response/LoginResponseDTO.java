@@ -1,4 +1,4 @@
-package mines.mines.DTO.Response;
+package mines.mines.dto.response;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
