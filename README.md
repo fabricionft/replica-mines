@@ -20,6 +20,7 @@ Obs: a intenção do mesmo não é ser 100% igual ao jogo original, mas sim ter 
 <ul>
   <li>Spring Web;</li>
   <li>Spring Data JPA;</li>
+  <li>Spring Security;</li>
   <li>MySQL Driver;</li>
   <li>Lombok;</li>
   <li>DevTools;</li>
